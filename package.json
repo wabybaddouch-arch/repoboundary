@@ -1,0 +1,40 @@
+{
+  "name": "repoboundary",
+  "version": "0.1.0",
+  "description": "Local CLI guardrails for protected files in AI-assisted Git repositories.",
+  "type": "module",
+  "bin": {
+    "repoboundary": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsup src/cli.ts --format esm --dts --clean",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run test"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "git",
+    "policy"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^14.0.2",
+    "picomatch": "^4.0.3",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.7",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
+  }
+}
