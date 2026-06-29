@@ -4,7 +4,7 @@
   "description": "Local CLI guardrails for protected files in AI-assisted Git repositories.",
   "type": "module",
   "bin": {
-    "repoboundary": "./dist/cli.js"
+    "repoboundary": "dist/cli.js"
   },
   "files": [
     "dist"
