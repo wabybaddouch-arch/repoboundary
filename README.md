@@ -4,6 +4,12 @@ RepoBoundary is a local CLI guardrail for Git repositories. You define protected
 
 It exists for AI-assisted coding workflows where agents can edit many files quickly. Prompts guide the agent; RepoBoundary verifies what actually reached Git staging.
 
+## Demo
+
+RepoBoundary blocks a commit when a protected path is modified:
+
+<video src="assets/demo.mp4" controls width="100%"></video>
+
 ## Honest V0 Limits
 
 RepoBoundary V0 blocks commits, not file writes. It does not stop an AI agent, editor, script, or developer from changing files on disk.
