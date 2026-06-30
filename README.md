@@ -8,7 +8,7 @@ It exists for AI-assisted coding workflows where agents can edit many files quic
 
 RepoBoundary blocks a commit when a protected path is modified:
 
-<video src="assets/demo.mp4" controls width="100%"></video>
+[Watch the demo video](assets/demo.mp4)
 
 ## Honest V0 Limits
 
