@@ -10,7 +10,6 @@ RepoBoundary blocks a commit when a protected path is modified:
 
 ![RepoBoundary demo](assets/demo.gif)
 
-[Watch the MP4 demo](assets/demo.mp4)
 
 ## Honest V0 Limits
 
