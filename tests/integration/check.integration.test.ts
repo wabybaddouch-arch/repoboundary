@@ -104,6 +104,25 @@ describe("repoboundary check", () => {
     expect(result.stderr).toContain("Reason: Sensitive authentication logic");
   });
 
+  it("fails with exit 1 for a protected staged Unicode filename", async () => {
+    await writeConfig(repoRoot, protectedConfig());
+    await writeRepoFile(
+      repoRoot,
+      "src/auth/café.ts",
+      "export const café = true;\n"
+    );
+    await git(repoRoot, ["add", "src/auth/café.ts"]);
+
+    const result = await runCheck(repoRoot);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stdout).toBe("");
+    expect(result.stderr).toContain("RepoBoundary blocked this commit.");
+    expect(result.stderr).toContain("src/auth/café.ts");
+    expect(result.stderr).toContain("Action: create");
+    expect(result.stderr).toContain("Rule: auth-core");
+  });
+
   it("works from a subdirectory inside the repository", async () => {
     await writeConfig(repoRoot, protectedConfig());
     await writeRepoFile(

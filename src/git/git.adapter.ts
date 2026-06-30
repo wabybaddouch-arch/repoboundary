@@ -29,7 +29,7 @@ export async function getStagedChanges(
 ): Promise<StagedFileChange[]> {
   const result = await runCommand(
     "git",
-    ["diff", "--cached", "--name-status"],
+    ["diff", "--cached", "--name-status", "-z"],
     {
       cwd: repoRoot
     }

@@ -10,9 +10,11 @@ Define protected paths like `src/auth/**`, `src/payments/**`, `prisma/schema.pri
 
 RepoBoundary blocks a commit when a protected path is changed:
 
-![RepoBoundary demo](assets/demo.gif)
+![RepoBoundary demo](https://raw.githubusercontent.com/wabybaddouch-arch/repoboundary/master/assets/demo.gif)
 
 ## Install
+
+Requires Node.js 20 or later.
 
 ```bash
 npm install -g repoboundary
@@ -48,7 +50,7 @@ Example output:
 ```txt
 RepoBoundary blocked this commit.
 
-Protected files were modified:
+Protected files were changed:
 
 1. src/auth/session.ts
    Action: modify
@@ -168,7 +170,7 @@ Each `match` entry is interpreted against Git repo-relative staged paths. Use `s
 ```txt
 RepoBoundary blocked this commit.
 
-Protected files were modified:
+Protected files were changed:
 
 1. src/auth/session.ts
    Action: create

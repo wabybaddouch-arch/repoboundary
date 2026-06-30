@@ -25,6 +25,17 @@
   ],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wabybaddouch-arch/repoboundary.git"
+  },
+  "homepage": "https://github.com/wabybaddouch-arch/repoboundary#readme",
+  "bugs": {
+    "url": "https://github.com/wabybaddouch-arch/repoboundary/issues"
+  },
   "dependencies": {
     "commander": "^14.0.2",
     "picomatch": "^4.0.3",

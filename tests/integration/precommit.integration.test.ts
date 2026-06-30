@@ -67,7 +67,7 @@ describe("repoboundary pre-commit hook", () => {
 
     expect(result.exitCode).not.toBe(0);
     expect(output).toContain("RepoBoundary blocked this commit.");
-    expect(output).toContain("Protected files were modified:");
+    expect(output).toContain("Protected files were changed:");
     expect(output).toContain("src/auth/session.ts");
     expect(output).toContain("Action: create");
     expect(output).toContain("Rule: src-auth");

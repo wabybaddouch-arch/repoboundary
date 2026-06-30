@@ -10,53 +10,74 @@ export class GitStatusParseError extends RepoBoundaryError {
 }
 
 export function parseGitNameStatus(output: string): StagedFileChange[] {
-  const lines = output
-    .split(/\r?\n/u)
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0);
-
-  return lines.map(parseGitNameStatusLine);
-}
-
-function parseGitNameStatusLine(line: string): StagedFileChange {
-  const [status, ...paths] = line.split("\t");
-
-  if (!status) {
-    throw new GitStatusParseError("Git status line is missing a status code.");
+  if (output.length === 0) {
+    return [];
   }
 
-  if (status.startsWith("R")) {
-    if (paths.length !== 2) {
-      throw new GitStatusParseError(
-        `Rename status requires old and new paths: ${line}`
-      );
-    }
+  const fields = output.split("\0");
 
-    return {
-      action: "rename",
-      oldPath: toPosixPath(paths[0] ?? ""),
-      newPath: toPosixPath(paths[1] ?? "")
-    };
-  }
-
-  if (paths.length !== 1) {
+  if (fields.at(-1) !== "") {
     throw new GitStatusParseError(
-      `Git status requires exactly one path for ${status}: ${line}`
+      "Git status output is not NUL-terminated."
     );
   }
 
-  const path = toPosixPath(paths[0] ?? "");
+  fields.pop();
+  const changes: StagedFileChange[] = [];
 
-  switch (status) {
-    case "A":
-      return { action: "create", path };
-    case "M":
-      return { action: "modify", path };
-    case "D":
-      return { action: "delete", path };
-    default:
-      throw new GitStatusParseError(
-        `Unsupported Git status "${status}". Phase 2 supports A, M, D, and R*.`
-      );
+  for (let index = 0; index < fields.length; ) {
+    const status = fields[index];
+
+    if (!status) {
+      throw new GitStatusParseError("Git status entry is missing a status code.");
+    }
+
+    index += 1;
+
+    if (status.startsWith("R")) {
+      const oldPath = fields[index];
+      const newPath = fields[index + 1];
+
+      if (!oldPath || !newPath) {
+        throw new GitStatusParseError(
+          `Rename status requires old and new paths: ${status}`
+        );
+      }
+
+      changes.push({
+        action: "rename",
+        oldPath: toPosixPath(oldPath),
+        newPath: toPosixPath(newPath)
+      });
+      index += 2;
+      continue;
+    }
+
+    const path = fields[index];
+
+    if (!path) {
+      throw new GitStatusParseError(`Git status requires a path for ${status}.`);
+    }
+
+    index += 1;
+    const normalizedPath = toPosixPath(path);
+
+    switch (status) {
+      case "A":
+        changes.push({ action: "create", path: normalizedPath });
+        break;
+      case "M":
+        changes.push({ action: "modify", path: normalizedPath });
+        break;
+      case "D":
+        changes.push({ action: "delete", path: normalizedPath });
+        break;
+      default:
+        throw new GitStatusParseError(
+          `Unsupported Git status "${status}". Phase 2 supports A, M, D, and R*.`
+        );
+    }
   }
+
+  return changes;
 }

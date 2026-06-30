@@ -35,7 +35,7 @@ export function formatBlockedCommit(
   return [
     "RepoBoundary blocked this commit.",
     "",
-    "Protected files were modified:",
+    "Protected files were changed:",
     "",
     violationLines,
     "",

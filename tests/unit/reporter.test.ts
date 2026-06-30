@@ -24,7 +24,7 @@ describe("reporter formatters", () => {
     const output = formatBlockedCommit([violation()]);
 
     expect(output).toContain("RepoBoundary blocked this commit.");
-    expect(output).toContain("Protected files were modified:");
+    expect(output).toContain("Protected files were changed:");
     expect(output).toContain("1. src/auth/session.ts");
     expect(output).toContain("Action: modify");
     expect(output).toContain("Rule: auth-core");
